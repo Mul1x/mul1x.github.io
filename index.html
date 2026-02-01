@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Безопасность и анонимность в сети</title>
+    <style>
+        * {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #121212;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+            position: relative;
+            border: 1px solid #333;
+        }
+        
+        h1, h2, h3 {
+            color: #ffffff;
+        }
+        
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            color: #3498db;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        h2 {
+            color: #5dade2;
+            margin-top: 30px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #333;
+        }
+        
+        h3 {
+            color: #76d7c4;
+            margin-top: 20px;
+        }
+        
+        .seller-notice {
+            background-color: #2c3e50;
+            border: 2px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .seller-notice a {
+            color: #3498db;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-decoration: none;
+            transition: color 0.3s, transform 0.2s;
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .seller-notice a:hover {
+            color: #5dade2;
+            transform: translateY(-2px);
+            background-color: rgba(52, 152, 219, 0.2);
+        }
+        
+        .warning {
+            background-color: #5d4037;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+            color: #ffccbc;
+        }
+        
+        .warning strong {
+            color: #ffcc80;
+        }
+        
+        .highlight {
+            background-color: #2c3e50;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #5dade2;
+        }
+        
+        a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: #5dade2;
+            text-decoration: underline;
+        }
+        
+        ul, ol {
+            padding-left: 25px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            color: #cccccc;
+        }
+        
+        .no-copy-message {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            opacity: 0.9;
+            display: none;
+            border: 1px solid #3498db;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+            color: #cccccc;
+        }
+        
+        .quote {
+            font-style: italic;
+            border-left: 3px solid #7f8c8d;
+            padding-left: 15px;
+            margin: 20px 0;
+            color: #b0b0b0;
+            background-color: rgba(127, 140, 141, 0.1);
+            padding: 15px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .links-section {
+            background-color: #2c3e50;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border: 1px solid #34495e;
+        }
+        
+        .links-section h3 {
+            color: #76d7c4;
+        }
+        
+        .links-section ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .links-section li {
+            margin-bottom: 10px;
+            padding: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .links-section li:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .seller-notice {
+                padding: 15px;
+            }
+        }
+        
+        /* Стили для скроллбара */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #3498db;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5dade2;
+        }
+        
+        /* Стиль для кнопок-ссылок */
+        .link-button {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+        
+        .link-button:hover {
+            background-color: #5dade2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="seller-notice">
+            <h3>Важная информация от продавца</h3>
+            <p>Данный материал предоставлен от <strong>cjjfuguf</strong> с площадки <strong>Playerok</strong></p>
+            <p>Официальная страница продавца: 
+                <a href="https://playerok.com/profile/Cjjfuguf/products" target="_blank">
+                    https://playerok.com/profile/Cjjfuguf/products
+                </a>
+            </p>
+            <p style="margin-top: 15px; color: #ffcc80; font-weight: bold;">
+                ⚠️ Если вы купили данный товар у другого продавца, запросите у него возврат средств!<br>
+                В крайнем случае сообщите об этом в поддержку площадки!
+            </p>
+        </div>
+        
+        <h1>Безопасность и анонимность в сети</h1>
+        
+        <div class="section">
+            <p>Проведя у себя на канале опрос, я понял, что люди не заботятся о своей безопасности и я решил повлиять на это. Здесь и практические советы, и рекомендации, и истории из жизни.</p>
+        </div>
+        
+        <h2>Предыстория</h2>
+        <div class="section">
+            <p>10 лет назад я работал и не защищал никаких данных. Я был школьником и заливал доры на пироги, сливал траф на файловые партнерки, и бог знает что они там ставили на машины)) Но потом я понял, что лучше не дожидаться того момента, когда ко мне придут, а у меня на рабочем столе лежит папка "доступы от селлера 4".</p>
+            <p>Я больше отношусь к параноикам, чем к похуистам, по этому много лет назад я обеспечил себя базовыми методами защиты от лукавого. Не скажу, что я эксперт в этом, но считаю принятые меры достаточными.</p>
+            <p>Конечно, зарабатывая свои 50-500к в месяц на трафике, вы научились никому не нужным, но лучше не рисковать и потратить несколько дней на решение этого вопроса раз и навсегда.</p>
+        </div>
+        
+        <h2>Что может быть, если не защищать себя?</h2>
+        <div class="section">
+            <ul>
+                <li>Вас могут посадить за лайк политического поста с вашей личной анкеты</li>
+                <li>У вас могут угнать данные карт, паспорта и это создаст проблемы</li>
+                <li>Вас могут шантажировать, подставлять или использовать переписки в качестве доказательств в суде</li>
+                <li>Через вас могут майнить, могут поставить соск-бота</li>
+                <li>Могут взломать ваши сайты, используя уязвимости файлизлы и браузера</li>
+                <li>Могут угнать логины и пароли из браузера</li>
+                <li>Могут получить доступ к вебке и смотреть как вы ...</li>
+                <li>Могут зашифровать ваши данные и требовать выкуп</li>
+                <li>Могут поставить подмену рекламы, могут встроить скрипты в браузер</li>
+                <li>Могут подменить DNS и фишить вас</li>
+            </ul>
+            
+            <p>Ваши намерения купить наркотики могут быть засечены органами. Ваши нелегальные действия доступны для просмотра в 1 клик. Почти каждый вебмастер или арбитражник имеет нежелательную инфу у себя на компе, за которую могут наказать.</p>
+        </div>
+        
+        <div class="quote">
+            История, которую я наблюдал несколько нет назад. В определенных кругах известен человек с ником Severa, это один из крупнейших спамеров в мире, сам он из РФ. Около 20 лет он спамил мыла, лил на всё, что только можно, кроме РУ, защищал себя очень грамотно, вел активную жизнь на форумах, и никто никогда его не видел, хотя все знали его. Но несколько лет назад он с семьей поехал в Испанию, где его приняли и передали властям США, теперь ему светит несколько десятков лет, так как его обвиняют во вмешательстве в выборы президента. Это пример того, что нет идеальной защиты. Есть баланс интереса к вам и ваших мер безопасности.
+        </div>
+        
+        <div class="warning">
+            <strong>Важно:</strong> Самое обидное, что вместе с ним в списки попало еще сколько то людей, из его списка контактов в джаббере и на форумах. Так что даже если поймают не вас, вы все равно будете иметь риски тоже быть схваченным за жопу. По этому анонимность и защита информации нужна всем, без исключения.
+        </div>
+        
+        <h2>Я работаю в белую, мне это всё нужно?</h2>
+        <div class="section">
+            <p>Помимо примера, приведенного выше, не забывайте, вы живете в стране, где не работают законы и базовые принципы личной конфиденциальности, тайны переписки и тд. Напишите вы какой нибудь тёлочке лет 20 в контакте, захотите познакомиться. А на деле ей 15 лет, и она подает на вас в суд по соответствующей статье, либо попросит бабла за молчание. ВК быстро сольет ваши данные в суд, а там и ваш телефон, и почта, и айпишники. И всё, даже если отмажетесь, проблем себе создадите много. По таким ситуациям в судах много дел, не думайте что я выдумал)</p>
+        </div>
+        
+        <h2>Как я на практике обеспечиваю себе защиту?</h2>
+        
+        <h3>1. Шифрование данных на носителях.</h3>
+        <div class="section">
+            <p>Начинается всё с данных. У меня зашифрованы все рабочие данные и все программы хранятся на системном диске, который полностью зашифрован. Как я уже сказал, я юзаю <span class="highlight">truecrypt 7.1a</span>. Мне он нравится и я к нему привык. Можно юзать битлокер или другие программы, суть не меняется.</p>
+            <p>Я делаю бэкапы на внешние жесткие диски, которые так же полностью зашифрованы.</p>
+            <p>Я не юзаю облака яндекса, гугла и тд, потому что это пиздец))) я придумываю и запоминаю пароли в 20-30 символов и храню их в голове. Да, это уязвимость в какой то степени, но это мне подходит.</p>
+        </div>
+        
+        <h3>2. Портативные программы</h3>
+        <div class="section">
+            <p>Все программы я стараюсь скачивать только в portable версии. Например я юзаю портативный фаерфокс, он хранит все свои данные в одной папке. Её можно куда то перекинуть, удалить или скопировать, это удобно. Файлы браузера не раскиданы по системе.</p>
+            <p>Если вы шифруете только часть данных, и ОС остается открытая, портативные программы это обязательно. Да и вообще это лучше во всех смыслах.</p>
+            <p>Иногда я работаю с SD карты на 8 гигов, она зашифрована и там все портативные программы - телеграм, браузер и тд. Я беру ноут, ставлю туда туркрипт, расшифровываю флешку и работаю, потом вынимаю её и всё, никаких следов на машине.</p>
+            <p>У многих популярных программ есть портабл версии, ищите.</p>
+        </div>
+        
+        <h3>3. Шифрование трафика через свой VPN</h3>
+        <div class="section">
+            <p>Зачем нужен VPN я думаю вы понимаете. VPN скрывает ваш реальный айпи, но это мелочь. VPN шифрует трафик и провайдер не видит что вы делаете и что пишите в соц сетях. Да, много где есть https, но много где его и нет. VPN палит тот факт, что вы скрываете себя и свои данные, ну и пускай. Это лучше, чем выкладывать всё в открытую.</p>
+            <p>Я не юзаю паблик VPN, у меня свой сервак за 5 баксов, на нем отключены логи и обратный пинг, этого достаточно. Раньше я юзал дабл впн, но скорость меня огорчала. Да, VPN режет скорость в 3-4 раза, это нужно учесть. Но если на кабеле у вас 50 мегабит, то с впном будет 10, что в в общем достаточно для многих задач.</p>
+        </div>
+        
+        <h3>11. Разные пароли на всех сайтах</h3>
+        <div class="section">
+            <p>Главное правило, которого я придерживаюсь - пароли должны быть разные на всех сайтах.</p>
+            <p>Вы можете зарегаться на каком то сайте с паролем "kjslfhw89gh", но если к вашей почте подходит этот же пароль, то всё.</p>
+            <p>У меня был сервис когда то, там регистрировались владельцы компаний. Юзали для реги корпоративные почты и устанавливали пароли для доступа к сайту.</p>
+            <p>Так вот, ради интереса я прочекал несколько десятков почт, и выяснил, что <span class="highlight">ПОЛОВИНА паролей</span>, которые они оставляли у меня, подходит к ящикам, где лежат документы, переписки, отчетности и приватные данные.</p>
+            <p>Придумайте алгоритм, по которому вы будете создавать в голове пароли и запоминать их. У меня 500 паролей и я все их помню, просто придумав однажды свой алгоритм.</p>
+        </div>
+        
+        <h3>16. Ошибки, тупость и невнимательность</h3>
+        <div class="section">
+            <p>Даже самые лютые аноны не могут исключить человеческий фактор. Самые умные преступники как правило палятся либо на своих ошибках, либо на слишком большой уверенности в себе.</p>
+            <p>Надо стараться всегда быть на чеку, осознанно подходить к работе, проверять и перепроверять свои слабые места.</p>
+        </div>
+        
+        <div class="links-section">
+            <h3>Полезные ссылки для чека анонимности</h3>
+            <ul>
+                <li><a href="https://whoer.net/ru" target="_blank">https://whoer.net/ru</a></li>
+                <li><a href="http://f.vision/" target="_blank">http://f.vision/</a></li>
+                <li><a href="https://whatleaks.com/" target="_blank">https://whatleaks.com/</a></li>
+            </ul>
+            
+            <div class="warning" style="margin-top: 15px;">
+                <strong>⚠️ Важно:</strong> Не забудьте подтвердить заказ и написать хороший отзыв :3<br>
+                Напоминаю что если вам не понравился подарок- это ваши проблемы и не надо мне писать по такому поводу, а также возврат средств мы делаем только если вы докажите что способ не рабочий - скринь/видео!
+            </div>
+            
+            <p style="text-align: center; margin-top: 20px; font-style: italic; color: #b0b0b0;">Всем хорошего дня</p>
+        </div>
+    </div>
+    
+    <div class="no-copy-message" id="noCopyMessage">Копирование запрещено</div>
+
+    <script>
+        // Запрет копирования и выделения
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            showNoCopyMessage();
+        });
+        
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        });
+        
+        // Запрет контекстного меню (правая кнопка мыши)
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            showNoCopyMessage();
+        });
+        
+        // Показ сообщения о запрете копирования
+        function showNoCopyMessage() {
+            const message = document.getElementById('noCopyMessage');
+            message.style.display = 'block';
+            
+            setTimeout(function() {
+                message.style.display = 'none';
+            }, 2000);
+        }
+        
+        // Добавляем атрибут для ссылок на внешние ресурсы
+        document.querySelectorAll('a').forEach(link => {
+            if (link.href && !link.href.startsWith('#')) {
+                link.setAttribute('target', '_blank');
+                link.setAttribute('rel', 'noopener noreferrer');
+            }
+        });
+        
+        // Анимация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s';
+            
+            setTimeout(function() {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
